@@ -43,23 +43,23 @@ class Dijkstra {
 
   pair<vector<double>, vector<double>> calFinalPath(Node *goal_node, map<double, Node *> closed_set);
 
-  pair<vector<double>, vector<double>> planning(vector<double> start, vector<double> goal);
+  pair<vector<double>, vector<double>> planning();
 
   void plotGraph(Node *current);
 
   void set(const vector<double> &st, const vector<double> &go, const vector<double> &ox, const vector<double> &oy);
 
  private:
-  double resolution;
-  double robot_radius;
+  double resolution_;
+  double robot_radius_;
   //地图xy的范围
-  double min_x, min_y, max_x, max_y;
+  double min_x_, min_y_, max_x_, max_y_;
   //xy方向上栅格的个数
-  double x_width, y_width;
-  vector<vector<bool>> obstacle_map;
-  vector<vector<double>> motion;
-  vector<double> st, go;
-  vector<double> ox, oy;
+  double x_width_, y_width_;
+  vector<vector<bool>> obstacle_map_;
+  vector<vector<double>> motion_;
+  vector<double> st_, go_;
+  vector<double> ox_, oy_;
 };
 
 #endif //DIJKSTRA_H

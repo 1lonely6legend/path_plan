@@ -5,7 +5,7 @@
 int main() {
   //设置起点和终点,栅格大小,机器人半径,障碍物坐标
   vector<double> start{-5, -5}, goal{50, 50};
-  double grid_size = 2.0;
+  double grid_size = 5.0;
   double robot_radius = 1.0;
   vector<double> ox, oy;
 
@@ -21,13 +21,15 @@ int main() {
   dijkstra.getMotionModel();
 
   //绘制地图,.k表示黑色点,ob表示蓝色圆点,or表示红色圆点,true表示显示网格
+  // 绘制了障碍物，起点，终点
   plt::plot(ox, oy, ".k");
   plt::plot(vector<double>{start[0]}, vector<double>{start[1]}, "ob");
   plt::plot(vector<double>{goal[0]}, vector<double>{goal[1]}, "or");
-  plt::grid(true);
+  //开启显示网格
+  plt::grid(false);
 
   //规划路径,-r表示红色线，绘制路径,进行规划，返回路径
-  pair<vector<double>, vector<double>> xy = dijkstra.planning(start, goal);
+  pair<vector<double>, vector<double>> xy = dijkstra.planning();
   plt::plot(xy.first, xy.second, "-r");
 
   //保存图片,dijkstra_demo.png,显示图片
