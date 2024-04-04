@@ -30,3 +30,6 @@ add_executable(dijkstra_demo dijkstra/main.cpp dijkstra/dijkstra.cpp)
 # 将dijkstra_demo可执行文件与path_plan接口库链接。PRIVATE指定了链接范围，这里意味着链接的库仅用于dijkstra_demo，不会传递给其他链接了dijkstra_demo的目标。
 target_link_libraries(dijkstra_demo PRIVATE path_plan)
 
+add_executable(astar_demo a_star/main.cpp a_star/astar.cpp)
+target_link_libraries(astar_demo PRIVATE path_plan)
+
