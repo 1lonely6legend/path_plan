@@ -12,7 +12,15 @@ int main() {
   //初始化astar类,设置障碍物信息,设置起点,目标点,障碍物的(x,y),在地图上生成障碍物,创建移动代价
   Astar astar(GRID_SIZE, ROBOT_RADIUS);
   //将障碍物信息存在oxoy中，具体设定是在函数循环中每次手动指定
-  astar.setObstacle(ox, oy);
+  if (MAP == "map1") {
+    astar.setObstacle1(ox, oy);
+  } else if (MAP == "map2") {
+    astar.setObstacle2(ox, oy);
+  } else if (MAP == "map3") {
+    astar.setObstacle3(ox, oy);
+  }
+
+
   // 设定起点和终点，障碍物信息
   astar.set(start, goal, ox, oy);
   // 在地图上生成障碍物

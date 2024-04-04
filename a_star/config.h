@@ -22,9 +22,12 @@
 #define HEURISTIC 2
 
 //定义启发式函数的倍率
-#define HEURISTIC_WEIGHT 1
+#define HEURISTIC_WEIGHT 10
 
 //定义动画每次拓展节点的时间间隔
 #define PAUSE_TIME 0.01
+
+//定义使用的地图
+#define MAP "map3"
 
 #endif //PATH_PLAN_DIJKSTRA_CONFIG_H_

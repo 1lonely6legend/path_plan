@@ -13,42 +13,6 @@ Astar::Astar(const double resolution, const double robotRadius)
   heuristic_weight_ = HEURISTIC_WEIGHT;
 }
 
-void Astar::setObstacle(vector<double> &ox, vector<double> &oy) {
-  for (double i = -10; i < 60; i++) {
-    //设置下边界
-    ox.push_back(i);
-    oy.push_back(-10.0);
-  }
-  for (double i = -10; i < 60; i++) {
-    // 设置右边界
-    ox.push_back(60.0);
-    oy.push_back(i);
-  }
-  for (double i = -10; i < 61; i++) {
-    // 设置上边界
-    ox.push_back(i);
-    oy.push_back(60.0);
-  }
-  for (double i = -10; i < 61; i++) {
-    // 设置左边界
-    ox.push_back(-10.0);
-    oy.push_back(i);
-  }
-  for (double i = -10; i < 10; i++) {
-    // 以下三个设置中间的障碍物
-    ox.push_back(i);
-    oy.push_back(10);
-  }
-  for (double i = 0; i < 30; i++) {
-    ox.push_back(40.0 - i);
-    oy.push_back(30);
-  }
-  for (double i = 0; i < 15; i++) {
-    ox.push_back(60.0 - i);
-    oy.push_back(30);
-  }
-}
-
 // 计算障碍物地图,首先计算地图的边界范围,然后计算地图的长宽,然后初始化地图,遍历地图的每一个点
 // ,判断与障碍物距离和机器人半径的关系,如果小于机器人半径则认为是障碍物
 void Astar::calObstacleMap(const vector<double> &ox, const vector<double> &oy) {
@@ -179,7 +143,7 @@ pair<vector<double>, vector<double>> Astar::planning() {
     double cost = numeric_limits<double>::max();
     for (auto iter = open_set.begin(); iter != open_set.end(); ++iter) {
       //遍历open_set中的所有值，寻找cost最小的值
-       double cost_current = iter->second->cost + calHeuristic(iter->second);
+      double cost_current = iter->second->cost + calHeuristic(iter->second);
       if (cost_current < cost) {
         cost = cost_current;
         cur_id = iter->first;
@@ -241,4 +205,124 @@ void Astar::set(const vector<double> &st,
   Astar::go_ = go;
   Astar::ox_ = ox;
   Astar::oy_ = oy;
+}
+
+void Astar::setObstacle1(vector<double> &ox, vector<double> &oy) {
+  for (double i = -10; i < 60; i++) {
+    //设置下边界
+    ox.push_back(i);
+    oy.push_back(-10.0);
+  }
+  for (double i = -10; i < 60; i++) {
+    // 设置右边界
+    ox.push_back(60.0);
+    oy.push_back(i);
+  }
+  for (double i = -10; i < 61; i++) {
+    // 设置上边界
+    ox.push_back(i);
+    oy.push_back(60.0);
+  }
+  for (double i = -10; i < 61; i++) {
+    // 设置左边界
+    ox.push_back(-10.0);
+    oy.push_back(i);
+  }
+  for (double i = -10; i < 10; i++) {
+    // 以下三个设置中间的障碍物
+    ox.push_back(i);
+    oy.push_back(10);
+  }
+  for (double i = 0; i < 30; i++) {
+    ox.push_back(40.0 - i);
+    oy.push_back(30);
+  }
+  for (double i = 0; i < 15; i++) {
+    ox.push_back(60.0 - i);
+    oy.push_back(30);
+  }
+}
+
+void Astar::setObstacle2(vector<double> &ox, vector<double> &oy) {
+  for (double i = -10; i < 60; i++) {
+    //设置下边界
+    ox.push_back(i);
+    oy.push_back(-10.0);
+  }
+  for (double i = -10; i < 60; i++) {
+    // 设置右边界
+    ox.push_back(60.0);
+    oy.push_back(i);
+  }
+  for (double i = -10; i < 61; i++) {
+    // 设置上边界
+    ox.push_back(i);
+    oy.push_back(60.0);
+  }
+  for (double i = -10; i < 61; i++) {
+    // 设置左边界
+    ox.push_back(-10.0);
+    oy.push_back(i);
+  }
+  for (double i = -10; i < 10; i++) {
+    // 以下三个设置中间的障碍物
+    ox.push_back(i);
+    oy.push_back(10);
+  }
+  for (double i = 0; i < 30; i++) {
+    ox.push_back(40.0 - i);
+    oy.push_back(30);
+  }
+  for (double i = 0; i < 15; i++) {
+    ox.push_back(60.0 - i);
+    oy.push_back(30);
+  }
+  for (double i = 0; i < 20; i++) {
+    ox.push_back(30);
+    oy.push_back(30 - i);
+  }
+}
+
+void Astar::setObstacle3(vector<double> &ox, vector<double> &oy) {
+  for (double i = -10; i < 60; i++) {
+    //设置下边界
+    ox.push_back(i);
+    oy.push_back(-10.0);
+  }
+  for (double i = -10; i < 60; i++) {
+    // 设置右边界
+    ox.push_back(60.0);
+    oy.push_back(i);
+  }
+  for (double i = -10; i < 61; i++) {
+    // 设置上边界
+    ox.push_back(i);
+    oy.push_back(60.0);
+  }
+  for (double i = -10; i < 61; i++) {
+    // 设置左边界
+    ox.push_back(-10.0);
+    oy.push_back(i);
+  }
+  for (double i = -10; i < 10; i++) {
+    // 以下三个设置中间的障碍物
+    ox.push_back(i);
+    oy.push_back(10);
+  }
+  for (double i = 0; i < 30; i++) {
+    ox.push_back(40.0 - i);
+    oy.push_back(30);
+  }
+  for (double i = 0; i < 15; i++) {
+    ox.push_back(60.0 - i);
+    oy.push_back(30);
+  }
+  for (double i = 0; i < 20; i++) {
+    ox.push_back(30);
+    oy.push_back(30 - i);
+  }
+  for (double i = 0; i < 20; i++) {
+    ox.push_back(30 + i);
+    oy.push_back(30);
+  }
 }

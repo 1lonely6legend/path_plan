@@ -34,7 +34,10 @@ class Astar {
   };
   //默认构造函数
   Astar(const double resolution, const double robotRadius);
-  void setObstacle(vector<double> &ox, vector<double> &oy);
+  void setObstacle1(vector<double> &ox, vector<double> &oy);
+  void setObstacle2(vector<double> &ox, vector<double> &oy);
+  void setObstacle3(vector<double> &ox, vector<double> &oy);
+
   void calObstacleMap(const vector<double> &ox, const vector<double> &oy);
   void getMotionModel();
   pair<vector<double>, vector<double>> planning();
