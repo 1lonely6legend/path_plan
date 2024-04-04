@@ -6,7 +6,7 @@
 
 int main() {
   //设置起点和终点,栅格大小,机器人半径,障碍物坐标
-  vector<double> start{MIN_X, MIN_Y}, goal{MAX_X, MAX_Y};
+  vector<double> start{START_X, START_Y}, goal{GOAL_X, GOAL_Y};
   double grid_size = GRID_SIZE;
   double robot_radius = ROBOT_RADIUS;
   vector<double> ox, oy;

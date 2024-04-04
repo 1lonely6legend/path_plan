@@ -13,6 +13,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "../matplotlibcpp.h"
+#include "config.h"
 
 #define EPS 1e-4
 #define PI 3.14159265354

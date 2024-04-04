@@ -220,7 +220,7 @@ void Dijkstra::plotGraph(Dijkstra::Node *current) {
   //计算节点的原始坐标，并绘制, 形状为x,颜色为c(青色)
   plt::plot(vector<double>{calPosition(current->x, min_x_)},
             vector<double>{calPosition(current->y, min_y_)}, "xc");
-  plt::pause(0.0000001);
+  plt::pause(PAUSE_TIME);
 }
 
 void Dijkstra::set(const vector<double> &st,
