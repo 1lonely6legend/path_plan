@@ -2,11 +2,13 @@
 // Created by ogier on 24-4-3.
 //
 #include "dijkstra.h"
+#include "config.h"
+
 int main() {
   //设置起点和终点,栅格大小,机器人半径,障碍物坐标
-  vector<double> start{-5, -5}, goal{50, 50};
-  double grid_size = 5.0;
-  double robot_radius = 1.0;
+  vector<double> start{MIN_X, MIN_Y}, goal{MAX_X, MAX_Y};
+  double grid_size = GRID_SIZE;
+  double robot_radius = ROBOT_RADIUS;
   vector<double> ox, oy;
 
   //初始化Dijkstra类,设置障碍物信息,设置起点,目标点,障碍物的(x,y),在地图上生成障碍物,创建移动代价
