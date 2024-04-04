@@ -30,8 +30,12 @@ int main() {
   //开启显示网格
   plt::grid(false);
 
+  // clock_t start_time = clock();
+
   //规划路径,-r表示红色线，绘制路径,进行规划，返回路径
   pair<vector<double>, vector<double>> xy = dijkstra.planning();
+  //clock_t end_time = clock();
+  //cout << "Time: " << (double) (end_time - start_time) / CLOCKS_PER_SEC << "s" << endl;
   plt::plot(xy.first, xy.second, "-r");
 
   //保存图片,dijkstra_demo.png,显示图片

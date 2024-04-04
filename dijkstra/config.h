@@ -10,7 +10,7 @@
 #define MAX_X 50.0
 #define MAX_Y 50.0
 //定义栅格的大小,即地图的分辨率
-#define GRID_SIZE 5.0
+#define GRID_SIZE 2.0
 //定义机器人的半径
 #define ROBOT_RADIUS 1.0
 

@@ -149,56 +149,67 @@ pair<vector<double>, vector<double>> Dijkstra::planning() {
   Node *start_node = new Node(calXyindex(sx, min_x_), calXyindex(sy, min_y_), 0.0, -1);
   Node *goal_node = new Node(calXyindex(gx, min_x_), calXyindex(gy, min_y_), 0.0, -1);
 
-  //初始化两个集合，open_set为待搜索的集合，closed_set为已搜索的集合
-  map<double, Node *> open_set, closed_set;
-  //计算对应栅格的索引，将起始点加入open集
-  open_set[calIndex(start_node)] = start_node;
+  //best——costs存储，索引对应节点，找到的最小值
+  map<double, double> best_costs;
+  //closed_set存放已经被遍历过的节点
+  map<double, Node *> closed_set;
 
-  Node *current = nullptr;
+  //定义一个比较函数，用于优先队列的排序，需要是struct类型因为要重载()运算符
+  struct cmp {
+    bool operator()(Node *left, Node *right) { return left->cost > right->cost; }
+  };
+  priority_queue<Node *, vector<Node *>, cmp> open_minHeap;
+
+  //将起点加入到open set,并更新best_costs
+  open_minHeap.push(start_node);
+  best_costs[calIndex(start_node)] = start_node->cost;
+
   //开始进行搜索
-  while (true) {
-    //初始化cur_id ,cost 为极大值
-    double cur_id = numeric_limits<double>::max();
-    double cost = numeric_limits<double>::max();
-    for (auto iter = open_set.begin(); iter != open_set.end(); ++iter) {
-      //遍历open_set中的所有值，寻找cost最小的值
-      if (iter->second->cost < cost) {
-        cost = iter->second->cost;
-        cur_id = iter->first;
-      }
-    }
-    current = open_set[cur_id];
-    plotGraph(current);
+  while (!open_minHeap.empty()) {
+    //由于使用小顶堆，所以每次取出的都是cost最小的节点
+    Node *current_node = open_minHeap.top();
+    open_minHeap.pop();
+    double current_node_index = calIndex(current_node);
 
-    //如果找到了终点，跳出循环
-    if (abs(current->x - goal_node->x) < EPS && abs(current->y - goal_node->y) < EPS) {
-      cout << "Find Goal" << endl;
-      goal_node->parent_index = current->parent_index;
-      goal_node->cost = current->cost;
+    //如果该节点已经被遍历过，则跳过
+    if (closed_set.find(current_node_index) != closed_set.end()) {
+      continue;
+    }
+    //如果该节点之前已经被遍历过，且cost更小，则跳过
+    if (best_costs.find(current_node_index) != best_costs.end()
+        && best_costs[current_node_index] < current_node->cost) {
+      continue;
+    }
+    //将该节点加入到closed_set中,表示已经遍历过,并绘制
+    closed_set[current_node_index] = current_node;
+    plotGraph(current_node);
+
+    // 若找到了目标结点，则退出循环
+    if (abs(current_node->x - goal_node->x) < EPS && abs(current_node->y - goal_node->y) < EPS) {
+      cout << "Find goal" << endl;
+      //需要将终点的父节点索引和cost值更新
+      goal_node->parent_index = current_node->parent_index;
+      goal_node->cost = current_node->cost;
       break;
     }
-    //如果没有找到终点，将当前节点从open set中删除，加入到closed set中
-    auto iter = open_set.find(cur_id);
-    open_set.erase(iter);
-    closed_set[cur_id] = current;
 
-    for (vector<double> move : motion_) {
-      //通过模型，探究最小cost节点处周围的点；注意这里将parent_index设置为当前节点的索引
-      Node *node = new Node(current->x + move[0], current->y + move[1], current->cost + move[2], cur_id);
-      //计算节点的索引，判断在哪个set或者是否合法
-      double n_id = calIndex(node);
-      //如果在closed_set中，跳过
-      if (closed_set.find(n_id) != closed_set.end())
+    for (auto move : motion_) {
+      //遍历cost值最小的当前节点的周围节点
+      Node *neighbor = new Node(current_node->x + move[0],
+                                current_node->y + move[1],
+                                current_node->cost + move[2],
+                                current_node_index);
+      double neighbor_index = calIndex(neighbor);
+      //如果该节点不合法，跳过
+      if (!verifyNode(neighbor))
         continue;
-      //如果超出边界或者碰到障碍物了,跳过
-      if (!verifyNode(node))
+      //如果该节点已经被遍历过，跳过
+      if(closed_set.find(neighbor_index) != closed_set.end())
         continue;
-      //如果open set中没有这个节点,加入open set
-      if (open_set.find(n_id) == open_set.end()) {
-        open_set[n_id] = node;
-      } else {//如果有这个节点，比较cost值，更新,保留cost更小的
-        if (open_set[n_id]->cost >= node->cost)
-          open_set[n_id] = node;
+      //如果该节点的cost更小，则更新best_costs,并加入到open set
+      if (best_costs.find(neighbor_index) == best_costs.end() || best_costs[neighbor_index] > neighbor->cost) {
+        best_costs[neighbor_index] = neighbor->cost;
+        open_minHeap.push(neighbor);
       }
     }
   }

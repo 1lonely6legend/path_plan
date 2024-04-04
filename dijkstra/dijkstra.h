@@ -8,6 +8,7 @@
 //#include <Eigen/Dense>
 #include <vector>
 #include <map>
+#include <queue>
 #include <cmath>
 #include <stdlib.h>
 #include <time.h>
